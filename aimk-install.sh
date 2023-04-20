@@ -55,7 +55,13 @@ INITABCONF=/etc/inittab
 BLACKLIST=/etc/modprobe.d/raspi-blacklist.conf
 LOADMOD=/etc/modules
 DTBODIR=/boot/overlays
-UNZIPDIR=$HOME/.genie-kit/bin
+
+# FIND_USER_FOLDER
+
+read -p "Enter Username: " username
+USER_HOME=$(getent passwd $username | cut -d ':' -f 6)
+
+UNZIPDIR=$USER_HOME/.genie-kit/bin
 
 # function define
 
