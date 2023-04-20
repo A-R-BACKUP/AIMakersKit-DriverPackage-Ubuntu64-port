@@ -55,7 +55,7 @@ INITABCONF=/etc/inittab
 BLACKLIST=/etc/modprobe.d/raspi-blacklist.conf
 LOADMOD=/etc/modules
 DTBODIR=/boot/overlays
-UNZIPDIR=~/.genie-kit/bin
+UNZIPDIR=$HOME/.genie-kit/bin
 
 # function define
 
@@ -113,8 +113,8 @@ sudocheck() {
 }
 
 drvinstall() {
-		mkdir -p $UNZIPDIR
-		tar xvzf ./installpackage.tgz --directory $UNZIPDIR
+		sudo mkdir $UNZIPDIR
+		sudo tar xvzf ./installpackage.tgz --directory $UNZIPDIR
 		sudo cp $UNZIPDIR/aimk.sh /etc/init.d
 		sudo cp $UNZIPDIR/snd-soc-core.ko /lib/modules/5.19.0-1016-raspi/kernel/sound/soc
 		sudo cp $UNZIPDIR/snd-soc-simple-card.ko /lib/modules/5.19.0-1016-raspi/kernel/sound/soc/generic
