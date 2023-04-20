@@ -35,6 +35,8 @@ armhfonly="yes" # whether the script is allowed to run on other arch
 armv6="yes" # whether armv6 processors are supported
 armv7="yes" # whether armv7 processors are supported
 armv8="yes" # whether armv8 processors are supported
+arm64="yes"
+aarch64="yes"
 raspbianonly="no" # whether the script is allowed to run on other OSes
 osreleases=( "Raspbian" ) # list os-releases supported
 oswarning=( "Debian" "Kano" "Mate" "PiTop" "Ubuntu" ) # list experimental os-releases
@@ -114,9 +116,9 @@ drvinstall() {
 		mkdir -p $UNZIPDIR
 		tar xvzf $(pwd)/installpackage.tgz --directory $UNZIPDIR
 		sudo cp $UNZIPDIR/aimk.sh /etc/init.d
-		sudo cp $UNZIPDIR/snd-soc-core.ko /lib/modules/4.9.41-v7+/kernel/sound/soc
-		sudo cp $UNZIPDIR/snd-soc-simple-card.ko /lib/modules/4.9.41-v7+/kernel/sound/soc/generic
-		sudo cp $UNZIPDIR/snd-soc-simple-card-utils.ko /lib/modules/4.9.41-v7+/kernel/sound/soc/generic
+		sudo cp $UNZIPDIR/snd-soc-core.ko /lib/modules/KERNELVER/kernel/sound/soc
+		sudo cp $UNZIPDIR/snd-soc-simple-card.ko /lib/modules/KERNELVER/kernel/sound/soc/generic
+		sudo cp $UNZIPDIR/snd-soc-simple-card-utils.ko /lib/modules/KERNELVER/kernel/sound/soc/generic
 		sudo update-rc.d aimk.sh defaults
 }
 
@@ -156,22 +158,8 @@ os_check() {
 }
 
 raspbian_check() {
-    IS_SUPPORTED=false
+    IS_SUPPORTED=true
     IS_EXPERIMENTAL=false
-
-    if [ -f /etc/os-release ]; then
-        if cat /etc/os-release | grep "/sid" > /dev/null; then
-            IS_SUPPORTED=false && IS_EXPERIMENTAL=true
-        elif cat /etc/os-release | grep "stretch" > /dev/null; then
-            IS_SUPPORTED=false && IS_EXPERIMENTAL=true
-        elif cat /etc/os-release | grep "jessie" > /dev/null; then
-            IS_SUPPORTED=true && IS_EXPERIMENTAL=false
-        elif cat /etc/os-release | grep "wheezy" > /dev/null; then
-            IS_SUPPORTED=true && IS_EXPERIMENTAL=false
-        else
-            IS_SUPPORTED=false && IS_EXPERIMENTAL=false
-        fi
-    fi
 }
 
 : <<'MAINSTART'
@@ -195,27 +183,27 @@ if [ $debugmode != "no" ]; then
     newline
 fi
 
-if ! $IS_ARMHF; then
-    warning "This hardware is not supported, sorry!"
-    warning "Config files have been left untouched"
-    newline && exit 1
-fi
+# if ! $IS_ARMHF; then
+#     warning "This hardware is not supported, sorry!"
+#     warning "Config files have been left untouched"
+#     newline && exit 1
+# fi
 
-if $IS_ARMv8 && [ $armv8 == "no" ]; then
-    warning "Sorry, your CPU is not supported by this installer"
-    newline && exit 1
-elif $IS_ARMv7 && [ $armv7 == "no" ]; then
-    warning "Sorry, your CPU is not supported by this installer"
-    newline && exit 1
-elif $IS_ARMv6 && [ $armv6 == "no" ]; then
-    warning "Sorry, your CPU is not supported by this installer"
-    newline && exit 1
-fi
+# if $IS_ARMv8 && [ $armv8 == "no" ]; then
+#     warning "Sorry, your CPU is not supported by this installer"
+#     newline && exit 1
+# elif $IS_ARMv7 && [ $armv7 == "no" ]; then
+#     warning "Sorry, your CPU is not supported by this installer"
+#     newline && exit 1
+# elif $IS_ARMv6 && [ $armv6 == "no" ]; then
+#     warning "Sorry, your CPU is not supported by this installer"
+#     newline && exit 1
+# fi
 
-if [ $raspbianonly == "yes" ] && ! $IS_RASPBIAN;then
-        warning "This script is intended for Raspbian on a Raspberry Pi!"
-        newline && exit 1
-fi
+# if [ $raspbianonly == "yes" ] && ! $IS_RASPBIAN;then
+#         warning "This script is intended for Raspbian on a Raspberry Pi!"
+#         newline && exit 1
+# fi
 
 if $IS_RASPBIAN; then
     raspbian_check
