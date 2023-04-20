@@ -19,7 +19,7 @@ was written for this script.
 
 DISCLAIMER
 
-UNZIPDIR=/home/pi/.genie-kit/bin
+UNZIPDIR=~/.genie-kit/bin
 
 # function define
 
@@ -78,13 +78,13 @@ sudocheck() {
 
 afterinstall() {
     echo "Configuring sound output"
-    if [ -e /home/pi/.asoundrc ]; then
-        if [ -e /home/pi/.asoundrc.old ]; then
-        sudo rm -f /home/pi/.asoundrc
+    if [ -e ~/.asoundrc ]; then
+        if [ -e ~/.asoundrc.old ]; then
+        sudo rm -f ~/.asoundrc
         fi
-        sudo mv /home/pi/.asoundrc /home/pi/.asoundrc.old
+        sudo mv ~/.asoundrc ~/.asoundrc.old
     fi
-    sudo cp $UNZIPDIR/asoundrc /home/pi/.asoundrc
+    sudo cp $UNZIPDIR/asoundrc ~/.asoundrc
     aplay $UNZIPDIR/sample_sound.wav
     amixer scontrols
     amixer set 'PCM' 80%
