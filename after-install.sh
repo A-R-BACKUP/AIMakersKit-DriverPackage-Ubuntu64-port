@@ -107,7 +107,8 @@ success "All done!"
 newline
 echo "System will reboot again"
 newline
-grep -v "after-install.sh" /etc/xdg/lxsession/LXDE-pi/autostart > /etc/xdg/lxsession/LXDE-pi/autostart
+sudo cp ./after-install.sh /etc/init.d
+sudo update-rc.d after-install.sh defaults
 newline
 sysreboot
 
