@@ -55,7 +55,7 @@ INITABCONF=/etc/inittab
 BLACKLIST=/etc/modprobe.d/raspi-blacklist.conf
 LOADMOD=/etc/modules
 DTBODIR=/boot/overlays
-UNZIPDIR=/home/pi/.genie-kit/bin
+UNZIPDIR=~/.genie-kit/bin
 
 # function define
 
