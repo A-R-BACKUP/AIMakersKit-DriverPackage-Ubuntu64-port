@@ -116,9 +116,9 @@ drvinstall() {
 		mkdir -p $UNZIPDIR
 		tar xvzf $(pwd)/installpackage.tgz --directory $UNZIPDIR
 		sudo cp $UNZIPDIR/aimk.sh /etc/init.d
-		sudo cp $UNZIPDIR/snd-soc-core.ko /lib/modules/KERNELVER/kernel/sound/soc
-		sudo cp $UNZIPDIR/snd-soc-simple-card.ko /lib/modules/KERNELVER/kernel/sound/soc/generic
-		sudo cp $UNZIPDIR/snd-soc-simple-card-utils.ko /lib/modules/KERNELVER/kernel/sound/soc/generic
+		sudo cp $UNZIPDIR/snd-soc-core.ko /lib/modules/5.19.0-1016-raspi/kernel/sound/soc
+		sudo cp $UNZIPDIR/snd-soc-simple-card.ko /lib/modules/5.19.0-1016-raspi/kernel/sound/soc/generic
+		sudo cp $UNZIPDIR/snd-soc-simple-card-utils.ko /lib/modules/5.19.0-1016-raspi/kernel/sound/soc/generic
 		sudo update-rc.d aimk.sh defaults
 }
 
